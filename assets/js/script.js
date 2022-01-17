@@ -8,7 +8,8 @@ var chars = {
 
 // Prompt to determine password char length
 var passwordLength = function() {
-  var confirmLength = window.prompt("How many characters would you like your password to have?");
+  var confirmLength = parseInt(window.prompt("How many characters would you like your password to have?"));
+  console.log(confirmLength);
 
   // "if" statement to restrict chars length to more than 7 but less than 128 chars
   if (confirmLength <= 7 || confirmLength >= 129) {
@@ -21,6 +22,7 @@ var passwordLength = function() {
     window.alert("Please only enter numerical values.");
     return passwordLength();
   }
+  return confirmLength;
 
 };
 
@@ -31,15 +33,14 @@ var charType = function() {
     askUpper: window.confirm("Please confirm if you would like your password to include uppercase letters."),
     askNumber: window.confirm("Please confirm if you would lke your password to include numerical values."),
     askSpecial: window.confirm("Please confirm if you would like your password to include special characters."),
-  }
+  };
 
   // checks if user selects at least 1 character type
-  if (askType.askLower === false && askType.askUpper === false && askType.askNumber && askType.askSpecial === false) {
+  if (askType.askLower === false && askType.askUpper === false && askType.askNumber === false && askType.askSpecial === false) {
     window.alert("Please select at least 1 character type. Try again.");
     return charType();
-  }
-  console.log(askType);
-
+  };
+  
   var passwordHold = [];
 
   // When user confirms lower case, password will gain access to lowerCase array
@@ -59,16 +60,15 @@ var charType = function() {
 
   // When user confirms special characters, password will gain access to specialChar array
   if (askType.askSpecial) {
-    passwordHold = passwordHold.concat(chars.numeric);
+    passwordHold = passwordHold.concat(chars.specialChar);
   }
 
   return passwordHold;
 };
 
 var generatePassword = function() {
-  var passValue = passwordLength();
-  passValue = parseInt(passwordLength);
-  console.log(passwordLength);
+  var passValue = parseInt(passwordLength());
+
 
   var finalPass = charType();
 
@@ -76,9 +76,11 @@ var generatePassword = function() {
   var randomize = "";
 
   for (i = 0; i < passValue; i++) {
-    randomize = randomize + finalPass[Math.floor(Math.random() * passValue.length)];
-    console.log(randomize);
-  }
+    randomize = randomize + finalPass[Math.floor(Math.random() * finalPass.length)];
+    
+  };
+
+  console.log(passValue);
   return randomize;
 
 };
@@ -93,7 +95,7 @@ function writePassword() {
 
   passwordText.value = password; 
 
-}
+};
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
